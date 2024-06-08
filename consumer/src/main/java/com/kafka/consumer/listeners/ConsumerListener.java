@@ -1,6 +1,7 @@
 package com.kafka.consumer.listeners;
 
 import com.kafka.consumer.custom.ConsumerCustomListener;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
@@ -59,5 +60,12 @@ public class ConsumerListener {
     )
     public void validMessage(String message){
         log.info("Grupo de consumo validMessageContainerFactory ::: \n{}", message);
+    }
+
+    @SneakyThrows
+    @ConsumerCustomListener(groupId = "group-0")
+    public void exception(String message){
+        log.info("Grupo de consumo Exception ::: {}", message.trim());
+        throw new IllegalArgumentException("ERRO");
     }
 }
